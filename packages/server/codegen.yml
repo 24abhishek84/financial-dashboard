@@ -1,0 +1,9 @@
+schema: src/schema/schema.ts
+generates:
+  ../common/src/generated.ts:
+    plugins:
+      - typescript
+    config:
+      useIndexSignature: true
+      scalars:
+        ID: string
