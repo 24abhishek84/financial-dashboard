@@ -108,6 +108,62 @@ useEffect(() => {
 
 ---
 
+### Node.js Issue 1: Promise Rejection Not Handled
+
+❌ WRONG: Unhandled promise rejections crash the server
+✅ CORRECT: Always catch promise rejections with .catch() or try-catch
+
+---
+
+### Node.js Issue 2: SQL Injection
+
+❌ WRONG: String interpolation in queries allows SQL injection attacks
+✅ CORRECT: Use parameterized queries with ? placeholders
+
+---
+
+### Node.js Issue 3: No Input Validation
+
+❌ WRONG: Accept any input without validation or type checking
+✅ CORRECT: Validate all inputs with express-validator or similar libraries
+
+---
+
+### Node.js Issue 4: Connection Pool Leak
+
+❌ WRONG: Database connections never released back to pool
+✅ CORRECT: Always call connection.release() in finally block or use async/await
+
+---
+
+### Node.js Issue 5: No Timeout
+
+❌ WRONG: External requests hang indefinitely, exhausting resources
+✅ CORRECT: Set explicit timeouts on all external calls and database queries
+
+---
+
+### Node.js Issue 6: Large Payloads in Memory
+
+❌ WRONG: Load entire files or datasets into memory at once
+✅ CORRECT: Stream large data to disk instead of buffering in memory
+
+---
+
+### Node.js Issue 7: Race Conditions
+
+❌ WRONG: Check-then-act pattern without synchronization between steps
+✅ CORRECT: Use database transactions and locks for concurrent operations
+
+---
+
+### Node.js Issue 8: No Environment Validation
+
+❌ WRONG: Missing environment variables cause silent failures or crashes
+✅ CORRECT: Validate all environment variables at startup with schemas
+
+---
+
 ### GraphQL Issue 1: N+1 Query Problem
 
 ❌ WRONG:
