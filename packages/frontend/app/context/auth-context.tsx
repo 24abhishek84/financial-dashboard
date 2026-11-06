@@ -1,10 +1,12 @@
+'use client';
+
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 import { gql, ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 import { User } from '@financial-dashboard/common';
 
 const client = new ApolloClient({
   link: new HttpLink({
-    uri: process.env.REACT_APP_GRAPHQL_URI || '/graphql',
+    uri: process.env.NEXT_PUBLIC_GRAPHQL_URI || 'http://localhost:4000/graphql',
     credentials: 'include',
   }),
   cache: new InMemoryCache(),
@@ -43,7 +45,15 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(localStorage.getItem('authToken'));
+  const [token, setToken] = useState<string | null>(null);
+
+  // Initialize from localStorage on first render
+  React.useEffect(() => {
+    const storedToken = localStorage.getItem('authToken');
+    if (storedToken) {
+      setToken(storedToken);
+    }
+  }, []);
 
   const login = async (email: string, password: string) => {
     try {

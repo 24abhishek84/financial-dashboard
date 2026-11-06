@@ -1,6 +1,9 @@
+'use client';
+
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Transaction } from '@financial-dashboard/common';
+import { Box, Typography } from '@mui/material';
 
 interface Props {
   transactions: Transaction[];
@@ -19,8 +22,10 @@ export const TransactionChart: React.FC<Props> = ({ transactions }) => {
   }, []);
 
   return (
-    <div className="chart-container">
-      <h2>Transactions by Category</h2>
+    <Box>
+      <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
+        Transactions by Category
+      </Typography>
       <ResponsiveContainer width="100%" height={400}>
         <BarChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
@@ -28,9 +33,9 @@ export const TransactionChart: React.FC<Props> = ({ transactions }) => {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="amount" fill="#8884d8" />
+          <Bar dataKey="amount" fill="#1976d2" />
         </BarChart>
       </ResponsiveContainer>
-    </div>
+    </Box>
   );
 };
