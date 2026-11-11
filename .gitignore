@@ -36,3 +36,11 @@ yarn-error.log*
 .DS_Store
 .env
 
+# Local documentation (keep locally, don't sync to remote)
+ARCHITECTURE.md
+DETAILED_TECH_EXAMPLES.md
+INTERVIEW_GUIDE.md
+INTERVIEW_GUIDE_backup.md
+NEXTJS_INTERVIEW_GUIDE.md
+NEXTJS_MIGRATION_PLAN.md
+SETUP_COMPLETE.md
