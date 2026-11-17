@@ -12,7 +12,7 @@
     "build-all": "npm run build -r",
     "codegen": "npm run codegen --workspace=@financial-dashboard/server",
     "kill-ports": "kill-port 3000 4000 --silent",
-    "dev": "npm run kill-ports && concurrently \"npm run dev --workspace=@financial-dashboard/server\" \"npm run start --workspace=@financial-dashboard/frontend\""
+    "dev": "npm run kill-ports && concurrently \"npm run dev --workspace=@financial-dashboard/server\" \"npm run dev --workspace=@financial-dashboard/frontend\""
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
