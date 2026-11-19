@@ -36,7 +36,7 @@ export const TransactionChart: React.FC<Props> = ({ transactions, categories = [
   }, []);
 
   return selectedCategory ? (
-    <CategoryExpensesChart transactions={expenseTransactions} categoryName={selectedCategory} />
+    <CategoryExpensesChart key={selectedCategory} transactions={expenseTransactions} categoryName={selectedCategory} />
   ) : (
     <Box>
       <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
