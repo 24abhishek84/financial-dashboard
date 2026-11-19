@@ -18,7 +18,7 @@ export const TransactionChart: React.FC<Props> = ({ transactions }) => {
     if (existing) {
       existing.amount += trans.amount;
     } else {
-      acc.push({ category: trans.categoryName, amount: trans.amount });
+      acc.push({ category: trans.categoryName, name: trans.categoryName, amount: trans.amount });
     }
     return acc;
   }, []);
@@ -37,7 +37,6 @@ export const TransactionChart: React.FC<Props> = ({ transactions }) => {
             labelLine={false}
             label={(entry: any) => `${entry.category}: $${entry.amount.toFixed(2)}`}
             outerRadius={120}
-            fill="#8884d8"
             dataKey="amount"
           >
             {data.map((entry: any, index: number) => (
@@ -45,7 +44,7 @@ export const TransactionChart: React.FC<Props> = ({ transactions }) => {
             ))}
           </Pie>
           <Tooltip formatter={(value) => `$${Number(value).toFixed(2)}`} />
-          <Legend />
+          <Legend dataKey="name" />
         </PieChart>
       </ResponsiveContainer>
     </Box>
