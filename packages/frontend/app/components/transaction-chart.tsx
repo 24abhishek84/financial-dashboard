@@ -35,8 +35,11 @@ export const TransactionChart: React.FC<Props> = ({ transactions, categories = [
     return acc;
   }, []);
 
+  console.log(data);
+  console.log(expenseTransactions);
+  console.log(selectedCategory);
   return selectedCategory ? (
-    <CategoryExpensesChart key={selectedCategory} transactions={expenseTransactions} categoryName={selectedCategory} />
+    <CategoryExpensesChart key={selectedCategory} transactions={transactions} categoryId={selectedCategory} categories={categories} />
   ) : (
     <Box>
       <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
@@ -58,7 +61,7 @@ export const TransactionChart: React.FC<Props> = ({ transactions, categories = [
             ))}
           </Pie>
           <Tooltip formatter={(value) => `$${Number(value).toFixed(2)}`} />
-          <Legend dataKey="name" />
+          <Legend />
         </PieChart>
       </ResponsiveContainer>
     </Box>
