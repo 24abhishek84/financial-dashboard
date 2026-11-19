@@ -1,13 +1,15 @@
 'use client';
 
 import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Transaction } from '@financial-dashboard/common';
 import { Box, Typography } from '@mui/material';
 
 interface Props {
   transactions: Transaction[];
 }
+
+const COLORS = ['#1976d2', '#388e3c', '#d32f2f', '#f57c00', '#7b1fa2', '#0097a7', '#fbc02d', '#c2185b'];
 
 export const TransactionChart: React.FC<Props> = ({ transactions }) => {
   // Group transactions by category
@@ -27,14 +29,24 @@ export const TransactionChart: React.FC<Props> = ({ transactions }) => {
         Transactions by Category
       </Typography>
       <ResponsiveContainer width="100%" height={400}>
-        <BarChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="category" />
-          <YAxis />
-          <Tooltip />
+        <PieChart>
+          <Pie
+            data={data}
+            cx="50%"
+            cy="50%"
+            labelLine={false}
+            label={(entry: any) => `${entry.category}: $${entry.amount.toFixed(2)}`}
+            outerRadius={120}
+            fill="#8884d8"
+            dataKey="amount"
+          >
+            {data.map((entry: any, index: number) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+          <Tooltip formatter={(value) => `$${Number(value).toFixed(2)}`} />
           <Legend />
-          <Bar dataKey="amount" fill="#1976d2" />
-        </BarChart>
+        </PieChart>
       </ResponsiveContainer>
     </Box>
   );
