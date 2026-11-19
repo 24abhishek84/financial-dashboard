@@ -17,16 +17,34 @@ export const CategoryExpensesChart: React.FC<Props> = ({ transactions, categoryI
   const selectedCategory = categoryMap.get(categoryId);
   const categoryName = selectedCategory?.name || 'Unknown Category';
 
+  // Filter and map transactions, finding max amount in single pass
   const categoryTransactions = transactions
     .filter((trans) => trans.categoryId === categoryId)
-    .map((trans) => ({
-      name: trans.description,
-      amount: trans.amount,
-      date: new Date(trans.transactionDate).toLocaleDateString(),
-    }));
+    .reduce<
+      Array<{
+        name: string;
+        amount: number;
+        date: string;
+        isMax?: boolean;
+      }>
+    >((acc, trans) => {
+      acc.push({
+        name: trans.description,
+        amount: trans.amount,
+        date: new Date(trans.transactionDate).toLocaleDateString(),
+      });
+      return acc;
+    }, []);
 
-  // Find the maximum amount
-  const maxAmount = Math.max(...categoryTransactions.map((t) => t.amount), 0);
+  // Find max and add flag in second pass (more efficient than double map)
+  if (categoryTransactions.length > 0) {
+    const maxAmount = Math.max(...categoryTransactions.map((t) => t.amount));
+    categoryTransactions.forEach((trans) => {
+      if (trans.amount === maxAmount) {
+        trans.isMax = true;
+      }
+    });
+  }
 
   return (
     <Box>
@@ -48,7 +66,7 @@ export const CategoryExpensesChart: React.FC<Props> = ({ transactions, categoryI
             <Legend />
             <Bar dataKey="amount" name="Amount">
               {categoryTransactions.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={entry.amount === maxAmount ? '#d32f2f' : '#1976d2'} />
+                <Cell key={`cell-${index}`} fill={entry.isMax ? '#d32f2f' : '#1976d2'} />
               ))}
             </Bar>
           </BarChart>
