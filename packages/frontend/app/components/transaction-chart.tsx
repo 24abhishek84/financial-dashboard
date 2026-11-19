@@ -2,18 +2,28 @@
 
 import React from 'react';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { Transaction } from '@financial-dashboard/common';
+import { Transaction, Category, CategoryType } from '@financial-dashboard/common';
 import { Box, Typography } from '@mui/material';
 
 interface Props {
   transactions: Transaction[];
+  categories?: Category[];
 }
 
 const COLORS = ['#1976d2', '#388e3c', '#d32f2f', '#f57c00', '#7b1fa2', '#0097a7', '#fbc02d', '#c2185b'];
 
-export const TransactionChart: React.FC<Props> = ({ transactions }) => {
+export const TransactionChart: React.FC<Props> = ({ transactions, categories = [] }) => {
+  // Create a map of category id to category for quick lookup
+  const categoryMap = new Map(categories.map((cat) => [cat.id, cat]));
+
+  // Filter transactions to only include EXPENSE categories
+  const expenseTransactions = transactions.filter((trans) => {
+    const category = categoryMap.get(trans.categoryId);
+    return category?.type === CategoryType.Expense;
+  });
+
   // Group transactions by category
-  const data = transactions.reduce((acc: any, trans) => {
+  const data = expenseTransactions.reduce((acc: any, trans) => {
     const existing = acc.find((item: any) => item.category === trans.categoryName);
     if (existing) {
       existing.amount += trans.amount;
