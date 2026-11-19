@@ -143,6 +143,18 @@ npm run build
 - `createTransaction(input)` - Create new transaction
 - `createCategory(input)` - Create new category
 
+## 📸 Screenshots
+
+### All Transactions
+View all expenses at a glance with the interactive pie chart showing expense distribution across categories. Click on any pie slice to filter and explore specific categories in detail.
+
+![Financial Dashboard - All Transactions](./docs/financial_dashboard.png)
+
+### Category Specific Transactions
+Dive deep into individual categories with the bar chart view, showing all transactions within a selected category. The highest expense is highlighted in red for quick identification.
+
+![Category Expenses - Food & Dining](./docs/category_transactions.png)
+
 ## 🎨 UI Components
 
 - **Dashboard** - Main dashboard with stats and charts
