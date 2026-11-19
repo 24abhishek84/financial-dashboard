@@ -1,21 +1,10 @@
 'use client';
 
 import React from 'react';
-import {
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-} from 'recharts';
+import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Transaction, Category, CategoryType } from '@financial-dashboard/common';
 import { Box, Typography } from '@mui/material';
+import { CategoryExpensesChart } from './category-expenses-chart';
 
 interface Props {
   transactions: Transaction[];
@@ -35,39 +24,6 @@ export const TransactionChart: React.FC<Props> = ({ transactions, categories = [
     return category?.type === CategoryType.Expense;
   });
 
-  // If a category is selected, show bar chart with individual transactions for that category
-  if (selectedCategory) {
-    const categoryTransactions = expenseTransactions
-      .filter((trans) => trans.categoryName === selectedCategory)
-      .map((trans) => ({
-        description: trans.description,
-        amount: trans.amount,
-        date: new Date(trans.transactionDate).toLocaleDateString(),
-      }));
-
-    return (
-      <Box>
-        <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
-          Expenses in {selectedCategory}
-        </Typography>
-        {categoryTransactions.length === 0 ? (
-          <Typography color="textSecondary">No transactions in this category</Typography>
-        ) : (
-          <ResponsiveContainer width="100%" height={400}>
-            <BarChart data={categoryTransactions}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" angle={-45} textAnchor="end" height={80} />
-              <YAxis />
-              <Tooltip formatter={(value) => `$${Number(value).toFixed(2)}`} />
-              <Legend />
-              <Bar dataKey="amount" fill="#1976d2" name="Amount" />
-            </BarChart>
-          </ResponsiveContainer>
-        )}
-      </Box>
-    );
-  }
-
   // Group transactions by category for pie chart
   const data = expenseTransactions.reduce((acc: any, trans) => {
     const existing = acc.find((item: any) => item.category === trans.categoryName);
@@ -79,7 +35,9 @@ export const TransactionChart: React.FC<Props> = ({ transactions, categories = [
     return acc;
   }, []);
 
-  return (
+  return selectedCategory ? (
+    <CategoryExpensesChart transactions={expenseTransactions} categoryName={selectedCategory} />
+  ) : (
     <Box>
       <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
         Transactions by Category
