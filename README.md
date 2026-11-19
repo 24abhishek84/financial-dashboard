@@ -13,6 +13,14 @@ A modern, full-stack financial management application built with React, TypeScri
   - Current Balance
   - Transaction Count
 - **Data Visualization** - Interactive charts for transaction analysis
+  - **Pie Chart** - View expense distribution across categories
+    - Click on pie slices to filter and view detailed breakdown
+    - Different colors for each category
+  - **Bar Chart** - Detailed view of transactions within a category
+    - Highest expense highlighted in red
+    - Shows transaction names on X-axis
+    - Hover to see date and amount details
+- **Category Filtering** - Filter by category dropdown or pie chart clicks
 - **Date Filtering** - Filter transactions by date range
 - **Responsive Design** - Works seamlessly on desktop and mobile devices
 
@@ -32,11 +40,12 @@ financial-dashboard/
 
 ### Frontend
 - **React 19** - UI library
+- **Next.js 15** - React framework with server-side rendering
 - **TypeScript** - Type safety
 - **Apollo Client** - GraphQL client
-- **React Router** - Navigation
-- **Tailwind CSS** - Styling
-- **Recharts** - Data visualization
+- **Material-UI (MUI)** - Component library and styling
+- **Emotion** - CSS-in-JS styling solution
+- **Recharts** - Data visualization library
 
 ### Backend
 - **Node.js** - Runtime
@@ -137,8 +146,17 @@ npm run build
 ## 🎨 UI Components
 
 - **Dashboard** - Main dashboard with stats and charts
-- **CategoryFilter** - Filter transactions by category
-- **TransactionChart** - Visualize transaction data
+- **TransactionChart** - Pie chart showing expense distribution by category
+  - Interactive slices - click to filter
+  - Color-coded by category
+  - Hover for amount details
+- **CategoryExpensesChart** - Bar chart for category transaction details
+  - Shows all transactions in selected category
+  - Highest expense highlighted in red
+  - Transaction names on X-axis
+  - Date visible in tooltip on hover
+- **CategoryFilter** - Dropdown to select category for detailed view
+- **TransactionList** - List of transactions with filtering
 - **Login/Register** - Authentication pages
 
 ## 🔐 Authentication
