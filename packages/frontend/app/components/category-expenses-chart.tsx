@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
 import { Transaction, Category } from '@financial-dashboard/common';
 import { Box, Typography } from '@mui/material';
 
@@ -25,6 +25,9 @@ export const CategoryExpensesChart: React.FC<Props> = ({ transactions, categoryI
       date: new Date(trans.transactionDate).toLocaleDateString(),
     }));
 
+  // Find the maximum amount
+  const maxAmount = Math.max(...categoryTransactions.map((t) => t.amount), 0);
+
   return (
     <Box>
       <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
@@ -43,7 +46,11 @@ export const CategoryExpensesChart: React.FC<Props> = ({ transactions, categoryI
             <YAxis />
             <Tooltip formatter={(value) => `$${Number(value).toFixed(2)}`} labelFormatter={(label) => `Transaction: ${label}`} contentStyle={{ backgroundColor: '#f5f5f5', border: '1px solid #ccc' }} />
             <Legend />
-            <Bar dataKey="amount" fill="#1976d2" name="Amount" />
+            <Bar dataKey="amount" name="Amount">
+              {categoryTransactions.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.amount === maxAmount ? '#d32f2f' : '#1976d2'} />
+              ))}
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
       )}
