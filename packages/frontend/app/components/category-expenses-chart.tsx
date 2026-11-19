@@ -28,7 +28,10 @@ export const CategoryExpensesChart: React.FC<Props> = ({ transactions, categoryI
   return (
     <Box>
       <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
-        Expenses in {categoryName}
+        Expenses in{' '}
+        <Box component="span" sx={{ color: '#1976d2', fontWeight: 700, fontSize: '1.1em' }}>
+          {categoryName}
+        </Box>
       </Typography>
       {categoryTransactions.length === 0 ? (
         <Typography color="textSecondary">No transactions in this category</Typography>
