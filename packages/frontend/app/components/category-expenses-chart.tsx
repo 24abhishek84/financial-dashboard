@@ -20,7 +20,7 @@ export const CategoryExpensesChart: React.FC<Props> = ({ transactions, categoryI
   const categoryTransactions = transactions
     .filter((trans) => trans.categoryId === categoryId)
     .map((trans) => ({
-      description: trans.description,
+      name: trans.description,
       amount: trans.amount,
       date: new Date(trans.transactionDate).toLocaleDateString(),
     }));
@@ -36,9 +36,9 @@ export const CategoryExpensesChart: React.FC<Props> = ({ transactions, categoryI
         <ResponsiveContainer width="100%" height={400}>
           <BarChart data={categoryTransactions}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="date" angle={-45} textAnchor="end" height={80} />
+            <XAxis dataKey="name" angle={-45} textAnchor="end" height={100} />
             <YAxis />
-            <Tooltip formatter={(value) => `$${Number(value).toFixed(2)}`} />
+            <Tooltip formatter={(value) => `$${Number(value).toFixed(2)}`} labelFormatter={(label) => `Transaction: ${label}`} contentStyle={{ backgroundColor: '#f5f5f5', border: '1px solid #ccc' }} />
             <Legend />
             <Bar dataKey="amount" fill="#1976d2" name="Amount" />
           </BarChart>
