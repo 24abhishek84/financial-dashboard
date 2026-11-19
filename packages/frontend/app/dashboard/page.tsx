@@ -203,7 +203,12 @@ export default function DashboardPage() {
 
         {/* Chart Section */}
         <Paper sx={{ p: 3, mb: 4 }}>
-          <TransactionChart transactions={transactions} categories={categories} selectedCategory={selectedCategory} />
+          <TransactionChart
+            transactions={transactions}
+            categories={categories}
+            selectedCategory={selectedCategory}
+            onCategorySelect={setSelectedCategory}
+          />
         </Paper>
 
         {/* Transactions List Section */}

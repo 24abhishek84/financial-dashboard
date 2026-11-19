@@ -10,19 +10,40 @@ interface Props {
   transactions: Transaction[];
   categories?: Category[];
   selectedCategory?: string | null;
+  onCategorySelect?: (categoryId: string | null) => void;
 }
 
 const COLORS = ['#1976d2', '#388e3c', '#d32f2f', '#f57c00', '#7b1fa2', '#0097a7', '#fbc02d', '#c2185b'];
 
-export const TransactionChart: React.FC<Props> = ({ transactions, categories = [], selectedCategory = null }) => {
+export const TransactionChart: React.FC<Props> = ({
+  transactions,
+  categories = [],
+  selectedCategory = null,
+  onCategorySelect,
+}) => {
   // Create a map of category id to category for quick lookup
   const categoryMap = new Map(categories.map((cat) => [cat.id, cat]));
+
+  // Create a map of category name to category ID for reverse lookup
+  const categoryNameToIdMap = new Map(
+    categories.filter((cat) => cat.type === 'EXPENSE').map((cat) => [cat.name, cat.id])
+  );
 
   // Filter transactions to only include EXPENSE categories
   const expenseTransactions = transactions.filter((trans) => {
     const category = categoryMap.get(trans.categoryId);
     return category?.type === CategoryType.Expense;
   });
+
+  // Handle pie slice click
+  const handlePieClick = (data: any) => {
+    if (onCategorySelect) {
+      const categoryId = categoryNameToIdMap.get(data.category);
+      if (categoryId) {
+        onCategorySelect(categoryId);
+      }
+    }
+  };
 
   // Group transactions by category for pie chart
   const data = expenseTransactions.reduce((acc: any, trans) => {
@@ -55,6 +76,8 @@ export const TransactionChart: React.FC<Props> = ({ transactions, categories = [
             label={(entry: any) => `${entry.category}: $${entry.amount.toFixed(2)}`}
             outerRadius={120}
             dataKey="amount"
+            onClick={(state: any) => handlePieClick(state.payload)}
+            style={{ cursor: 'pointer' }}
           >
             {data.map((entry: any, index: number) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
